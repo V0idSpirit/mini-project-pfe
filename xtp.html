@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ex Tp</title>
+    <link rel="stylesheet" href="bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+
+</head>
+<body onload="getPfe();">
+    <div class="container">
+        <div class="row">
+            <div class="col alert mt-2 bg-primary text-white">
+                <div class="card-title">
+                    <h1>Catalogue des PFEs (ESSAT)</h1>
+                    </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-3 px-0">
+                <ul class="list-group fw-light">
+                    <a href="#" class="list-group-item list-group-item-action active" onclick="getPfe();" aria-current="true"><b class="bi bi-arrow-right-circle-fill">&nbsp;&nbsp;Tous les PFEs&nbsp;&nbsp;<button type="button" class="btn btn-warning btn-sm px-1 py-0" style="border-radius: 15px;">13</button></b></a>
+                    
+                    <a href="#" onclick="getTel();" class="list-group-item list-group-item-action"><b class="bi bi-arrow-right-square">&nbsp;&nbsp;PFE's Télecom&nbsp;&nbsp;<button type="button" class="btn btn-sm px-2 py-0 text-white" style="border-radius: 15px;background-color: #08AFA7;">3</button></b></a>
+
+                    <a href="#" onclick="getDev();" class="list-group-item list-group-item-action"><b class="bi bi-arrow-right-square">&nbsp;&nbsp;PFE's Développement&nbsp;&nbsp;<button type="button" class="btn btn-sm px-2 py-0 text-white" style="border-radius: 15px;background-color: #08AFA7;">4</button></b></a>
+                    
+                    <a href="#" onclick="getRes();" class="list-group-item list-group-item-action"><b class="bi bi-arrow-right-square">&nbsp;&nbsp;PFE's Réseaux&nbsp;&nbsp;<button type="button" class="btn btn-sm px-2 py-0 text-white" style="border-radius: 15px;background-color: #08AFA7;">3</button></b></a>
+                    
+                    <a href="#" onclick="getEi();" class="list-group-item list-group-item-action"><b class="bi bi-arrow-right-square">&nbsp;&nbsp;PFE's Embarqués et IoT&nbsp;&nbsp;<button type="button" class="btn btn-sm px-2 py-0 text-white" style="border-radius: 15px;background-color: #08AFA7;">3</button></b></a>
+                    
+                </ul>
+            </div>
+            <div class="col-9 px-3">
+                <div class="card">
+                    <div class="card-header bg-success text-white" aria-current="true"><h4>Liste Des PFEs</h4></div>
+                    <div class="card-body py-0 px-0">
+                        <table class="table table-hover" style="width:100%;">
+                            <thead>
+                                <tr style="background-color:lightgray;">
+                                    <td>ID</td>
+                                    <td>Titre</td>
+                                    <td>Type</td>
+                                </tr>
+                            </thead>
+                            <tbody class="fw-light" id="tab">
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    <script>
+        var xhr = new XMLHttpRequest();
+        function getPfe() {
+          
+          xhr.open("GET", "http://chakerbm.tn/ajax/pfe/pfes.php", true);
+          xhr.send();
+          xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+              //$("#tab > tr").remove();
+              showPfe(this.responseXML);
+            }
+          }
+        }
+        
+        
+        function getTel() {
+          
+          xhr.open("GET", "http://chakerbm.tn/ajax/pfe/pfespartypes.php?type=Telecom", true);
+          xhr.send();
+          xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                //$("#tab > tr").remove();
+                showPfe(this.responseXML);
+            }
+          }
+        }
+        
+        function getDev() {
+          
+          xhr.open("GET", "http://chakerbm.tn/ajax/pfe/pfespartypes.php?type=Developpement", true);
+          xhr.send();
+          xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+              //  $("#tab > tr").remove();
+                showPfe(this.responseXML);
+            }
+          }
+        }
+        
+        function getRes() {
+          
+          xhr.open("GET", "http://chakerbm.tn/ajax/pfe/pfespartypes.php?type=reseaux", true);
+          xhr.send();
+          xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+              //$("#tab > tr").remove();
+              showPfe(this.responseXML);
+            }
+          }
+        }
+        
+        function getEi() {
+          
+          xhr.open("GET", "http://chakerbm.tn/ajax/pfe/pfespartypes.php?type=Embarques et IoT", true);
+          xhr.send();
+          xhr.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+               // $("#tab > tr").remove();
+                showPfe(this.responseXML);
+            }
+          }
+        }
+        
+        function showPfe (data){
+            var elts = data.getElementsByTagName('pfe');
+            var tab = document.getElementById('tab');
+            tab.innerHTML='';
+            for (var i = 0; i < elts.length; i++){
+                var tr = document.createElement('tr');
+                
+                var id = document.createElement('td');
+                id.innerHTML= elts[i].getAttribute('id');
+                tr.appendChild(id);
+        
+                var titre = document.createElement('td');
+                titre.innerHTML=elts[i].getAttribute('titre');
+                tr.appendChild(titre);
+
+                var type = document.createElement('td');
+                type.innerHTML=elts[i].getAttribute('type');                
+                tr.appendChild(type);
+
+                tab.appendChild(tr);
+            }
+        } 
+        
+        </script>
+            
+</body>
+</html>
