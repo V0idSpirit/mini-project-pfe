@@ -207,7 +207,6 @@ function getPfe() {
   xhr.send();
   xhr.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-      $("#tab > tr").remove();
       showPfe(this.responseXML);
     }
   }
@@ -220,7 +219,6 @@ function getTel() {
   xhr.send();
   xhr.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-        $("#tab > tr").remove();
         showPfe(this.responseXML);
     }
   }
@@ -232,7 +230,6 @@ function getDev() {
   xhr.send();
   xhr.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-        $("#tab > tr").remove();
         showPfe(this.responseXML);
     }
   }
@@ -244,7 +241,6 @@ function getRes() {
   xhr.send();
   xhr.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-      $("#tab > tr").remove();
       showPfe(this.responseXML);
     }
   }
@@ -256,7 +252,6 @@ function getEi() {
   xhr.send();
   xhr.onreadystatechange = function () {
     if (this.readyState == 4 && this.status == 200) {
-        $("#tab > tr").remove();
         showPfe(this.responseXML);
     }
   }
